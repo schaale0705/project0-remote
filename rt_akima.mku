@@ -1,0 +1,30 @@
+#
+#
+
+p0 = rt
+p1 = $(p0)_akima
+
+EXE    = $(HOME)/bin
+EXE    = .
+CC     = gcc
+#CFLAGS = -O3 -Wall -static -Wshadow -pipe -m486 -fwritable-strings
+CFLAGS = -O3 -Wall -static -Wshadow -pipe 
+#LFLAGS = -lm -lnetcdf -o 
+LFLAGS = -lm -o 
+
+all: $(EXE)/$(p1) 
+
+$(EXE)/$(p1): $(p1).o $(p1).mku
+	$(CC) $(CFLAGS) $(p1).o $(LFLAGS) $(EXE)/$(p1)
+
+$(p1).o: $(p1).c $(p1).mku
+	$(CC) $(CFLAGS) -c $(p1).c
+
+clean:
+	rm *.pro *.gp *.dat 
+
+distclean:
+	rm $(p1).o $(EXE)/$(p1) *.pro *.gp *.dat
+
+test: $(EXE)/$(p1)
+	$(p0)_test -
